@@ -1,8 +1,8 @@
-# FlattenSave for Paint.NET
+# <img src="icon_new.png" width="32" align="center"> FlattenSave for Paint.NET
 
 **One-click "flatten and save a copy" for Paint.NET 5.x.**
 
-FlattenSave adds a new window that lets will export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through *File > Save As*, picking a folder, typing a name, choosing a type and confirming dialogs every time.
+FlattenSave adds a new window that lets will export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through File > Save As, picking a folder, typing a name, choosing a type and confirming dialogs every time.
 
 ![FlattenSave panel](docs/screenshot.png)
 
@@ -26,13 +26,13 @@ Anyone who repeatedly exports the same image to the same place while still editi
   - Mirror horizontally and/or vertically
   - **Omit layers** whose names match a comma-separated list (e.g. `guide, notes`)
 - **Don't warn when overwriting**: skip the confirmation when the target file already exists, ideal for repeated exports.
-- Matches Paint.NET's dark UI, with tooltips on every control, and a version number in the header.
+- Follows Paint.NET's selected theme (light or dark, switching live), with tooltips on every control and a version number in the header.
 
 ## Install
 
 1. Download `FlattenSave_x.x.x.zip` from the Releases.
 2. Extract `FlattenSave.dll` into `Documents\paint.net App Files\Effects\`.
-3. Restart Paint.NET. The panel opens automatically; reopen it any time from **Effects > Tools > FlattenSave Panel**.
+3. Restart Paint.NET. The panel opens automatically; reopen it any time from **Effects > Tools > FlattenSave Panel** (marked with the FlattenSave icon).
 
 ## Usage
 
@@ -40,6 +40,13 @@ Anyone who repeatedly exports the same image to the same place while still editi
 2. (Optional) type an **Export file name**, pick a **File type**, and toggle any rotate / mirror / omit options.
 3. Press **Flatten & Save**.
 
+## Notes
+
+- The panel is a floating window; Paint.NET has no plugin API for docking it.
+- Your open document is never modified. Export happens on a temporary flattened copy.
+
 ## Build
 
 `dotnet build -c Release` (needs the .NET 9 SDK and Paint.NET installed at `C:\Program Files\paint.net`).
+
+

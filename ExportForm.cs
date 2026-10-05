@@ -151,7 +151,11 @@ namespace FlattenSave
             pathBox.Inner.TextChanged += (s, e) => UpdatePreview();
             nameBox.Inner.TextChanged += (s, e) => UpdatePreview();
             typeBox.SelectedIndexChanged += (s, e) => UpdatePreview();
-            previewTimer.Tick += (s, e) => UpdatePreview();
+            previewTimer.Tick += (s, e) =>
+            {
+                UpdatePreview();
+                if (Theme.DetectDark() != Theme.IsDark) PanelHost.Rebuild(this);
+            };
             previewTimer.Start();
             FormClosed += (s, e) => previewTimer.Dispose();
             UpdatePreview();
@@ -166,13 +170,39 @@ namespace FlattenSave
             Text = text, AutoSize = true, ForeColor = Theme.Text, BackColor = Theme.Body, Margin = new Padding(3, 6, 3, 0)
         };
 
+        private Image LoadLogo()
+        {
+            try
+            {
+                using (var s = typeof(ExportForm).Assembly.GetManifestResourceStream("FlattenSave.icon.png"))
+                {
+                    if (s == null) return null;
+                    using (var src = new Bitmap(s))
+                    {
+                        int px = (int)Math.Round(16 * DeviceDpi / 96.0);
+                        var bmp = new Bitmap(px, px);
+                        using (var g = Graphics.FromImage(bmp))
+                        {
+                            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                            g.DrawImage(src, 0, 0, px, px);
+                        }
+                        return bmp;
+                    }
+                }
+            }
+            catch { return null; }
+        }
+
+        internal void Persist() => SaveSettings();
+
         private Control BuildHeader()
         {
             var header = new Panel { Dock = DockStyle.Top, Height = 26, BackColor = Theme.Header };
             var title = new Label
             {
                 Text = "FlattenSave", ForeColor = Theme.Text, BackColor = Theme.Header, Dock = DockStyle.Fill,
-                TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(6, 0, 0, 0)
+                TextAlign = ContentAlignment.MiddleLeft, Padding = new Padding(2, 0, 0, 0)
             };
             var close = new DarkButton
             {
@@ -200,6 +230,13 @@ namespace FlattenSave
             header.Controls.Add(title);
             header.Controls.Add(version);
             header.Controls.Add(closeHost);
+            var logo = LoadLogo();
+            if (logo != null)
+            {
+                var pic = new PictureBox { Image = logo, SizeMode = PictureBoxSizeMode.CenterImage, Dock = DockStyle.Left, Width = logo.Width + 12, BackColor = Theme.Header, Padding = new Padding(6, 0, 0, 0) };
+                pic.MouseDown += drag;
+                header.Controls.Add(pic);
+            }
             return header;
         }
 
@@ -217,7 +254,7 @@ namespace FlattenSave
         private void UpdateOmitState()
         {
             omitBox.Inner.ReadOnly = !omitBtn.Checked;
-            omitBox.Inner.ForeColor = omitBtn.Checked ? Color.White : Theme.Muted;
+            omitBox.Inner.ForeColor = omitBtn.Checked ? Theme.Text : Theme.Muted;
             omitBox.Inner.Text = omitBox.Inner.Text;
         }
 
@@ -268,9 +305,7 @@ namespace FlattenSave
                 if (baseName.Length == 0) baseName = PdnAccess.GetDocumentBaseName(ws);
                 if (string.IsNullOrEmpty(baseName))
                 {
-                    Report("Save this file first(or enter a file name).", true);
-                    MessageBox.Show(this, "This image hasn't been saved yet, so there is no file name to export with.\r\nSave it first, or type a file name in the panel.",
-                        "FlattenSave", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Report("Save this file first, or enter a file name.", true);
                     return;
                 }
                 baseName = baseName.Trim();
@@ -308,6 +343,7 @@ namespace FlattenSave
         }
     }
 }
+
 
 
 

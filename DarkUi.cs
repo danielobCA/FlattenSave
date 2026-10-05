@@ -6,24 +6,51 @@ using System.Windows.Forms;
 
 namespace FlattenSave
 {
-    // Palette sampled from Paint.NET's dark theme.
+    // Palette sampled from Paint.NET's dark and light themes; Apply switches between them.
     internal static class Theme
     {
-        public static readonly Color Body = Color.FromArgb(0x28, 0x28, 0x28);
-        public static readonly Color Header = Color.FromArgb(0x20, 0x20, 0x20);
-        public static readonly Color Border = Color.FromArgb(0x4C, 0x4C, 0x4C);
-        public static readonly Color Input = Color.FromArgb(0x1C, 0x1C, 0x1C);
-        public static readonly Color Text = Color.FromArgb(0xE6, 0xE6, 0xE6);
-        public static readonly Color Muted = Color.FromArgb(0xA0, 0xA0, 0xA0);
-        public static readonly Color Button = Color.FromArgb(0x3A, 0x3A, 0x3A);
-        public static readonly Color ButtonHover = Color.FromArgb(0x4C, 0x4C, 0x4C);
-        public static readonly Color Accent = Color.FromArgb(0x1A, 0x5B, 0xA0);
-        public static readonly Color AccentHover = Color.FromArgb(0x24, 0x70, 0xC0);
-        public static readonly Color Close = Color.FromArgb(0xC7, 0x50, 0x50);
-        public static readonly Color Error = Color.FromArgb(0xE0, 0x6C, 0x6C);
+        public static Color Body, Header, Border, Input, Text, Muted, Button, ButtonHover, Accent, AccentHover, Close, Error;
+        public static bool IsDark { get; private set; }
         public static readonly Font Font = new Font("Segoe UI", 9f);
-    }
 
+        static Theme() { Apply(DetectDark()); }
+
+        public static void Apply(bool dark)
+        {
+            IsDark = dark;
+            Accent = Color.FromArgb(0x1A, 0x5B, 0xA0); AccentHover = Color.FromArgb(0x24, 0x70, 0xC0);
+            Close = Color.FromArgb(0xC7, 0x50, 0x50);
+            if (dark)
+            {
+                Body = Color.FromArgb(0x28, 0x28, 0x28); Header = Color.FromArgb(0x20, 0x20, 0x20); Border = Color.FromArgb(0x4C, 0x4C, 0x4C);
+                Input = Color.FromArgb(0x1C, 0x1C, 0x1C); Text = Color.FromArgb(0xE6, 0xE6, 0xE6); Muted = Color.FromArgb(0xA0, 0xA0, 0xA0);
+                Button = Color.FromArgb(0x3A, 0x3A, 0x3A); ButtonHover = Color.FromArgb(0x4C, 0x4C, 0x4C); Error = Color.FromArgb(0xE0, 0x6C, 0x6C);
+            }
+            else
+            {
+                Body = Color.FromArgb(0xF2, 0xF2, 0xF2); Header = Color.FromArgb(0xE6, 0xE6, 0xE6); Border = Color.FromArgb(0xA0, 0xA0, 0xA0);
+                Input = Color.White; Text = Color.FromArgb(0x1E, 0x1E, 0x1E); Muted = Color.FromArgb(0x6A, 0x6A, 0x6A);
+                Button = Color.FromArgb(0xE1, 0xE1, 0xE1); ButtonHover = Color.FromArgb(0xD0, 0xD0, 0xD0); Error = Color.FromArgb(0xC0, 0x30, 0x30);
+            }
+        }
+
+        // Follows Paint.NET's own theme setting, falling back to the Windows app theme when it is set to follow the system.
+        public static bool DetectDark()
+        {
+            try
+            {
+                using (var k = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\paint.net"))
+                {
+                    string v = k?.GetValue("UI/AeroColorScheme") as string;
+                    if (string.Equals(v, "Dark", StringComparison.OrdinalIgnoreCase)) return true;
+                    if (string.Equals(v, "Light", StringComparison.OrdinalIgnoreCase)) return false;
+                }
+                using (var k = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
+                    return !(k?.GetValue("AppsUseLightTheme") is int i && i != 0);
+            }
+            catch { return true; }
+        }
+    }
     internal class DarkButton : Control
     {
         private bool hover, down;
@@ -67,7 +94,7 @@ namespace FlattenSave
         public DarkTextBox()
         {
             Height = 26; Padding = new Padding(6, 4, 6, 3); BackColor = Theme.Input;
-            Inner.BorderStyle = BorderStyle.None; Inner.BackColor = Theme.Input; Inner.ForeColor = Color.White;
+            Inner.BorderStyle = BorderStyle.None; Inner.BackColor = Theme.Input; Inner.ForeColor = Theme.Text;
             Inner.Font = Theme.Font; Inner.Dock = DockStyle.Fill;
             Inner.Enter += (s, e) => Invalidate();
             Inner.Leave += (s, e) => Invalidate();
@@ -133,7 +160,7 @@ namespace FlattenSave
         public DarkComboBox()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
-            Font = Theme.Font; ForeColor = Color.White; Cursor = Cursors.Hand; Height = 26;
+            Font = Theme.Font; ForeColor = Theme.Text; Cursor = Cursors.Hand; Height = 26;
         }
 
         [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
@@ -353,4 +380,5 @@ namespace FlattenSave
         }
     }
 }
+
 

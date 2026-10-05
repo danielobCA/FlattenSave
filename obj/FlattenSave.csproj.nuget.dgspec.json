@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\paint.net plugins\\QuickExport\\FlattenSave.csproj": {
-      "version": "1.0.1",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "C:\\paint.net plugins\\QuickExport\\FlattenSave.csproj",
         "projectName": "FlattenSave",

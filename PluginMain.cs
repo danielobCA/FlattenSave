@@ -17,7 +17,7 @@ namespace FlattenSave
         public string DisplayName => "FlattenSave";
         public string Author => "Local";
         public string Copyright => "";
-        public Version Version => new Version(1, 0, 0, 0);
+        public Version Version => new Version(1, 0, 2, 0);
         public Uri WebsiteUri => new Uri("https://www.getpaint.net");
     }
 
@@ -25,7 +25,13 @@ namespace FlattenSave
     [PluginSupportInfo<PluginInfo>(DisplayName = "FlattenSave Panel")]
     public sealed class FlattenSaveEffect : PropertyBasedEffect
     {
-        public FlattenSaveEffect() : base("FlattenSave Panel", (Image)null, "Tools", new EffectOptions { Flags = EffectFlags.None }) { }
+        public FlattenSaveEffect() : base("FlattenSave Panel", LoadIcon(), "Tools", new EffectOptions { Flags = EffectFlags.None }) { }
+
+        private static Image LoadIcon()
+        {
+            using (var s = typeof(FlattenSaveEffect).Assembly.GetManifestResourceStream("FlattenSave.icon.png"))
+                return s == null ? null : new Bitmap(s);
+        }
 
         protected override PropertyCollection OnCreatePropertyCollection() => PropertyCollection.CreateEmpty();
 
@@ -73,6 +79,19 @@ namespace FlattenSave
             return null;
         }
 
+        // Re-creates the panel in place when Paint.NET's theme changes.
+        internal static void Rebuild(ExportForm old)
+        {
+            Theme.Apply(Theme.DetectDark());
+            var loc = old.Location;
+            old.Persist();
+            old.Close();
+            Form main = FindMainForm();
+            if (main == null) return;
+            form = new ExportForm(main) { Location = loc };
+            form.Show(main);
+        }
+
         internal static bool ShowPanel()
         {
             Form main = FindMainForm();
@@ -94,6 +113,8 @@ namespace FlattenSave
         }
     }
 }
+
+
 
 
 

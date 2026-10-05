@@ -5,12 +5,15 @@
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>FlattenSave</AssemblyName>
-    <Version>1.0.1</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Version>1.0.2</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <RootNamespace>FlattenSave</RootNamespace>
     <NoWarn>MSB3277;CS8981;NU1701</NoWarn><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <PdnDir Condition="'$(PdnDir)'==''">C:\Program Files\paint.net</PdnDir>
   </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icon_new.png" LogicalName="FlattenSave.icon.png" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="PaintDotNet.Base"><HintPath>$(PdnDir)\PaintDotNet.Base.dll</HintPath><Private>false</Private></Reference>
     <Reference Include="PaintDotNet.Core"><HintPath>$(PdnDir)\PaintDotNet.Core.dll</HintPath><Private>false</Private></Reference>
@@ -31,6 +34,8 @@
     <Reference Include="paintdotnet"><HintPath>$(PdnDir)\paintdotnet.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
 </Project>
+
+
 
 
 

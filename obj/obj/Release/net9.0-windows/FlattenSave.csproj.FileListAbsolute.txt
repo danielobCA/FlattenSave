@@ -1,0 +1,12 @@
+C:\paint.net plugins\QuickExport\bin\Release\net9.0-windows\FlattenSave.deps.json
+C:\paint.net plugins\QuickExport\bin\Release\net9.0-windows\FlattenSave.dll
+C:\paint.net plugins\QuickExport\bin\Release\net9.0-windows\FlattenSave.pdb
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.csproj.AssemblyReference.cache
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.GeneratedMSBuildEditorConfig.editorconfig
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.AssemblyInfoInputs.cache
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.AssemblyInfo.cs
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.csproj.CoreCompileInputs.cache
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.dll
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\refint\FlattenSave.dll
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\FlattenSave.pdb
+C:\paint.net plugins\QuickExport\obj\Release\net9.0-windows\ref\FlattenSave.dll

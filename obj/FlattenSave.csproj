@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>FlattenSave</AssemblyName>
+    <Version>1.0.3</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <RootNamespace>FlattenSave</RootNamespace>
+    <NoWarn>MSB3277;CS8981;NU1701</NoWarn><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <PdnDir Condition="'$(PdnDir)'==''">C:\Program Files\paint.net</PdnDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icon_new.png" LogicalName="FlattenSave.icon.png" />
+    <EmbeddedResource Include="settings_icon.png" LogicalName="FlattenSave.settings.png" />
+    <EmbeddedResource Include="open_icon.png" LogicalName="FlattenSave.open.png" />
+    <EmbeddedResource Include="close_normal.png" LogicalName="FlattenSave.close.png" />
+    <EmbeddedResource Include="close_hot.png" LogicalName="FlattenSave.close_hot.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PaintDotNet.Base"><HintPath>$(PdnDir)\PaintDotNet.Base.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Core"><HintPath>$(PdnDir)\PaintDotNet.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Effects"><HintPath>$(PdnDir)\PaintDotNet.Effects.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Effects.Core"><HintPath>$(PdnDir)\PaintDotNet.Effects.Core.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Framework"><HintPath>$(PdnDir)\PaintDotNet.Framework.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.ObjectModel"><HintPath>$(PdnDir)\PaintDotNet.ObjectModel.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.PropertySystem"><HintPath>$(PdnDir)\PaintDotNet.PropertySystem.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Primitives"><HintPath>$(PdnDir)\PaintDotNet.Primitives.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Fundamentals"><HintPath>$(PdnDir)\PaintDotNet.Fundamentals.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Windows"><HintPath>$(PdnDir)\PaintDotNet.Windows.dll</HintPath><Private>false</Private></Reference>
+      <Reference Include="PaintDotNet.ComponentModel"><HintPath>$(PdnDir)\PaintDotNet.ComponentModel.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Collections"><HintPath>$(PdnDir)\PaintDotNet.Collections.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Data"><HintPath>$(PdnDir)\PaintDotNet.Data.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Resources"><HintPath>$(PdnDir)\PaintDotNet.Resources.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.SystemLayer"><HintPath>$(PdnDir)\PaintDotNet.SystemLayer.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="PaintDotNet.Runtime"><HintPath>$(PdnDir)\PaintDotNet.Runtime.dll</HintPath><Private>false</Private></Reference>
+    <Reference Include="paintdotnet"><HintPath>$(PdnDir)\paintdotnet.dll</HintPath><Private>false</Private></Reference>
+  </ItemGroup>
+</Project>
+
+
+
+
+
+
+
+

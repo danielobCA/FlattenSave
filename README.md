@@ -2,7 +2,7 @@
 
 **One-click "flatten and save a copy" for Paint.NET 5.x.**
 
-FlattenSave adds a small dark-themed floating panel (like the Colors and Tools windows) that exports the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through *File > Save As*, picking a folder, typing a name, choosing a type and confirming dialogs every time.
+FlattenSave adds a new window that lets will export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through *File > Save As*, picking a folder, typing a name, choosing a type and confirming dialogs every time.
 
 ![FlattenSave panel](docs/screenshot.png)
 
@@ -39,11 +39,6 @@ Anyone who repeatedly exports the same image to the same place while still editi
 1. Set the **Output Directory**.
 2. (Optional) type an **Export file name**, pick a **File type**, and toggle any rotate / mirror / omit options.
 3. Press **Flatten & Save**.
-
-## Notes
-
-- The panel is a floating window; Paint.NET has no plugin API for docking it.
-- Your open document is never modified. Export happens on a temporary flattened copy.
 
 ## Build
 

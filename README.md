@@ -1,21 +1,50 @@
 # FlattenSave for Paint.NET
 
-A floating dark-themed panel for Paint.NET 5.x that flattens the open image and saves it to a folder in one click.
+**One-click "flatten and save a copy" for Paint.NET 5.x.**
+
+FlattenSave adds a small dark-themed floating panel (like the Colors and Tools windows) that exports the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through *File > Save As*, picking a folder, typing a name, choosing a type and confirming dialogs every time.
 
 ![FlattenSave panel](docs/screenshot.png)
 
-- Output directory (paste or browse), file name (falls back to the open file's name), file type dropdown
-- Rotate 90 / -90 / 180, mirror horizontal / vertical, omit layers by name
-- Optional "don't warn when overwriting"
+## Who it's for
+
+Anyone who repeatedly exports the same image to the same place while still editing it in Paint.NET:
+
+- **Texture and asset work for 3D / game tools** (Blender, Unity, Godot, etc.): edit a texture in layers, press **Flatten & Save**, and the engine's watched folder picks up the new PNG.
+- **Iterating on an image** where you want a fresh flattened copy after each round of edits.
+- **Layered working files**: your layered `.pdn` stays untouched and open; only the exported copy is flattened.
+- **Quick variants**: export rotated or mirrored copies, or copies with helper layers (guides, notes, backgrounds) left out.
+
+## Features
+
+- **Output directory**: paste a path or browse for a folder. It is remembered between sessions.
+- **Export file name**: optional. If left blank, the open file's name is used. If the image hasn't been saved and no name is typed, FlattenSave won't export and tells you why.
+- **File type dropdown**: lists the single-layer formats Paint.NET can save (PNG, JPEG, BMP, etc.).
+- **Live preview**: a line under the button shows exactly what will be written, e.g. `Texture.png`.
+- **Export options** (toggle buttons):
+  - Rotate 90 clockwise, 90 counter-clockwise or 180
+  - Mirror horizontally and/or vertically
+  - **Omit layers** whose names match a comma-separated list (e.g. `guide, notes`)
+- **Don't warn when overwriting**: skip the confirmation when the target file already exists, ideal for repeated exports.
+- Matches Paint.NET's dark UI, with tooltips on every control, and a version number in the header.
 
 ## Install
-Download `FlattenSave_1.0.1.zip` from the repository root, extract `FlattenSave.dll`, copy it to `Documents\paint.net App Files\Effects\`, restart Paint.NET. Reopen the panel from Effects > Tools > FlattenSave Panel.
+
+1. Download `FlattenSave_x.x.x.zip` from the Releases.
+2. Extract `FlattenSave.dll` into `Documents\paint.net App Files\Effects\`.
+3. Restart Paint.NET. The panel opens automatically; reopen it any time from **Effects > Tools > FlattenSave Panel**.
+
+## Usage
+
+1. Set the **Output Directory**.
+2. (Optional) type an **Export file name**, pick a **File type**, and toggle any rotate / mirror / omit options.
+3. Press **Flatten & Save**.
+
+## Notes
+
+- The panel is a floating window; Paint.NET has no plugin API for docking it.
+- Your open document is never modified. Export happens on a temporary flattened copy.
 
 ## Build
+
 `dotnet build -c Release` (needs the .NET 9 SDK and Paint.NET installed at `C:\Program Files\paint.net`).
-
-
-
-
-
-

@@ -4,7 +4,7 @@
 
 FlattenSave adds a new window that lets you export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through File > Save As, picking a folder, typing a name, choosing a type and confirming dialogs every time.
 
-![FlattenSave panel](https://imgur.com/jOBhkLX) ![FlattenSave settings](https://imgur.com/driZaYu)
+![FlattenSave panel](https://i.imgur.com/jOBhkLX.png) ![FlattenSave settings](https://i.imgur.com/driZaYu.png)
 
 ## Who it's for
 

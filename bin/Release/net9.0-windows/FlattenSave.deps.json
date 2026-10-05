@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "FlattenSave/1.0.0": {
+        "runtime": {
+          "FlattenSave.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FlattenSave/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

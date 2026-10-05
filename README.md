@@ -9,10 +9,11 @@ A floating dark-themed panel for Paint.NET 5.x that flattens the open image and 
 - Optional "don't warn when overwriting"
 
 ## Install
-Download `FlattenSave.dll` from `docs/FlattenSave.zip`, copy it to `Documents\paint.net App Files\Effects\`, restart Paint.NET. Reopen the panel from Effects > Tools > FlattenSave Panel.
+Download `FlattenSave_1.0.1.zip` from the repository root, extract `FlattenSave.dll`, copy it to `Documents\paint.net App Files\Effects\`, restart Paint.NET. Reopen the panel from Effects > Tools > FlattenSave Panel.
 
 ## Build
 `dotnet build -c Release` (needs the .NET 9 SDK and Paint.NET installed at `C:\Program Files\paint.net`).
+
 
 
 

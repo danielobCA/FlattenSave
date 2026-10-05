@@ -5,7 +5,7 @@
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>FlattenSave</AssemblyName>
-    <Version>1.0.0</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Version>1.0.1</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <RootNamespace>FlattenSave</RootNamespace>
     <NoWarn>MSB3277;CS8981;NU1701</NoWarn><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
@@ -31,6 +31,7 @@
     <Reference Include="paintdotnet"><HintPath>$(PdnDir)\paintdotnet.dll</HintPath><Private>false</Private></Reference>
   </ItemGroup>
 </Project>
+
 
 
 

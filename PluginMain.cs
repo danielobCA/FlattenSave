@@ -17,7 +17,7 @@ namespace FlattenSave
         public string DisplayName => "FlattenSave";
         public string Author => "Local";
         public string Copyright => "";
-        public Version Version => new Version(1, 0, 2, 0);
+        public Version Version => new Version(1, 0, 3, 0);
         public Uri WebsiteUri => new Uri("https://www.getpaint.net");
     }
 
@@ -51,6 +51,7 @@ namespace FlattenSave
     internal static class PanelHost
     {
         private static ExportForm form;
+        private static LauncherButton launcher;
         private static int started;
 
         [ModuleInitializer]
@@ -82,7 +83,7 @@ namespace FlattenSave
         // Re-creates the panel in place when Paint.NET's theme changes.
         internal static void Rebuild(ExportForm old)
         {
-            Theme.Apply(Theme.DetectDark());
+            Theme.Apply(Theme.Detect());
             var loc = old.Location;
             old.Persist();
             old.Close();
@@ -92,12 +93,21 @@ namespace FlattenSave
             form.Show(main);
         }
 
+        internal static bool IsOpen => form != null && !form.IsDisposed && form.Visible;
+
+        internal static void TogglePanel()
+        {
+            if (form != null && !form.IsDisposed && form.Visible) form.Close();
+            else ShowPanel();
+        }
+
         internal static bool ShowPanel()
         {
             Form main = FindMainForm();
             if (main == null) return false;
             main.BeginInvoke(new Action(() =>
             {
+                if (launcher == null || launcher.IsDisposed) { launcher = new LauncherButton(main); launcher.Show(main); }
                 if (form == null || form.IsDisposed)
                 {
                     form = new ExportForm(main);

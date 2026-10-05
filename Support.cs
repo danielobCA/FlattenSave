@@ -19,6 +19,26 @@ namespace FlattenSave
         public bool OmitLayers { get; set; }
         public string OmitNames { get; set; } = "";
         public bool SuppressOverwriteWarning { get; set; }
+        public bool NumberExports { get; set; }
+        public string[] HotkeyKeys { get; set; } = new string[0];
+        public bool MultiExport { get; set; }
+        public bool ShowFullPath { get; set; }
+        public string[] ExtraExtensions { get; set; } = new string[0];
+        public int PanelX { get; set; } = int.MinValue;
+        public int PanelY { get; set; } = int.MinValue;
+        public int PanelWidth { get; set; }
+        public int PanelHeight { get; set; }
+        public bool UpdatePromptShown { get; set; }
+        public bool CheckForUpdates { get; set; }
+        public string LastUpdateCheck { get; set; } = "";
+
+        // Restores every setting except the output directory and the first-run update prompt state.
+        public void ResetToDefaults()
+        {
+            var d = new Settings { OutputDirectory = OutputDirectory, UpdatePromptShown = UpdatePromptShown };
+            foreach (var p in typeof(Settings).GetProperties())
+                p.SetValue(this, p.GetValue(d));
+        }
 
         private static string FilePath => Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlattenSave", "settings.json");

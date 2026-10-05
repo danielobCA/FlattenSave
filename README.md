@@ -2,9 +2,9 @@
 
 **One-click "flatten and save a copy" for Paint.NET 5.x.**
 
-FlattenSave adds a new window that lets will export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through File > Save As, picking a folder, typing a name, choosing a type and confirming dialogs every time.
+FlattenSave adds a new window that lets you export the open image to a folder you choose, flattened, in the format you choose, without touching your working file. Press one button instead of going through File > Save As, picking a folder, typing a name, choosing a type and confirming dialogs every time.
 
-![FlattenSave panel](docs/screenshot.png)
+![FlattenSave panel](docs/screenshot.png) ![FlattenSave settings](docs/settings.png)
 
 ## Who it's for
 
@@ -25,8 +25,9 @@ Anyone who repeatedly exports the same image to the same place while still editi
   - Rotate 90 clockwise, 90 counter-clockwise or 180
   - Mirror horizontally and/or vertically
   - **Omit layers** whose names match a comma-separated list (e.g. `guide, notes`)
-- **Don't warn when overwriting**: skip the confirmation when the target file already exists, ideal for repeated exports.
-- Follows Paint.NET's selected theme (light or dark, switching live), with tooltips on every control and a version number in the header.
+- **Number exports**: never overwrite; repeated exports become image.png, image_1.png, image_2.png.
+- **File name templates**: {name}, {date}, {time} and {n} / {n:3} (auto-incrementing counter).
+- **Launcher button** on the top right that opens or closes the panel.
 
 ## Install
 
@@ -39,14 +40,6 @@ Anyone who repeatedly exports the same image to the same place while still editi
 1. Set the **Output Directory**.
 2. (Optional) type an **Export file name**, pick a **File type**, and toggle any rotate / mirror / omit options.
 3. Press **Flatten & Save**.
-
-## Notes
-
-- The panel is a floating window; Paint.NET has no plugin API for docking it.
-- Your open document is never modified. Export happens on a temporary flattened copy.
-
-## Build
-
-`dotnet build -c Release` (needs the .NET 9 SDK and Paint.NET installed at `C:\Program Files\paint.net`).
+4. Voila! :)
 
 

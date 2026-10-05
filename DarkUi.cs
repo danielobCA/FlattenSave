@@ -6,56 +6,76 @@ using System.Windows.Forms;
 
 namespace FlattenSave
 {
-    // Palette sampled from Paint.NET's dark and light themes; Apply switches between them.
+    internal enum Scheme { Dark, Light, Blue }
+
+    // Palettes sampled from Paint.NET's Dark, Light and Blue themes; Apply switches between them.
     internal static class Theme
     {
         public static Color Body, Header, Border, Input, Text, Muted, Button, ButtonHover, Accent, AccentHover, Close, Error;
-        public static bool IsDark { get; private set; }
+        public static Scheme Current { get; private set; }
+        public static bool IsDark => Current == Scheme.Dark;
         public static readonly Font Font = new Font("Segoe UI", 9f);
 
-        static Theme() { Apply(DetectDark()); }
+        static Theme() { Apply(Detect()); }
 
-        public static void Apply(bool dark)
+        public static void Apply(Scheme scheme)
         {
-            IsDark = dark;
+            Current = scheme;
             Accent = Color.FromArgb(0x1A, 0x5B, 0xA0); AccentHover = Color.FromArgb(0x24, 0x70, 0xC0);
             Close = Color.FromArgb(0xC7, 0x50, 0x50);
-            if (dark)
+            switch (scheme)
             {
-                Body = Color.FromArgb(0x28, 0x28, 0x28); Header = Color.FromArgb(0x20, 0x20, 0x20); Border = Color.FromArgb(0x4C, 0x4C, 0x4C);
-                Input = Color.FromArgb(0x1C, 0x1C, 0x1C); Text = Color.FromArgb(0xE6, 0xE6, 0xE6); Muted = Color.FromArgb(0xA0, 0xA0, 0xA0);
-                Button = Color.FromArgb(0x3A, 0x3A, 0x3A); ButtonHover = Color.FromArgb(0x4C, 0x4C, 0x4C); Error = Color.FromArgb(0xE0, 0x6C, 0x6C);
-            }
-            else
-            {
-                Body = Color.FromArgb(0xF2, 0xF2, 0xF2); Header = Color.FromArgb(0xE6, 0xE6, 0xE6); Border = Color.FromArgb(0xA0, 0xA0, 0xA0);
-                Input = Color.White; Text = Color.FromArgb(0x1E, 0x1E, 0x1E); Muted = Color.FromArgb(0x6A, 0x6A, 0x6A);
-                Button = Color.FromArgb(0xE1, 0xE1, 0xE1); ButtonHover = Color.FromArgb(0xD0, 0xD0, 0xD0); Error = Color.FromArgb(0xC0, 0x30, 0x30);
+                case Scheme.Dark:
+                    Body = Color.FromArgb(0x28, 0x28, 0x28); Header = Color.FromArgb(0x20, 0x20, 0x20); Border = Color.FromArgb(0x4C, 0x4C, 0x4C);
+                    Input = Color.FromArgb(0x1C, 0x1C, 0x1C); Text = Color.FromArgb(0xE6, 0xE6, 0xE6); Muted = Color.FromArgb(0xA0, 0xA0, 0xA0);
+                    Button = Color.FromArgb(0x3A, 0x3A, 0x3A); ButtonHover = Color.FromArgb(0x4C, 0x4C, 0x4C); Error = Color.FromArgb(0xE0, 0x6C, 0x6C);
+                    break;
+                case Scheme.Blue:
+                    Body = Color.FromArgb(0xEB, 0xF2, 0xFA); Header = Color.FromArgb(0xDC, 0xE7, 0xF5); Border = Color.FromArgb(0x9F, 0xAE, 0xC2);
+                    Input = Color.White; Text = Color.FromArgb(0x1E, 0x1E, 0x1E); Muted = Color.FromArgb(0x58, 0x59, 0x5B);
+                    Button = Color.FromArgb(0xD0, 0xDE, 0xF0); ButtonHover = Color.FromArgb(0xBC, 0xD0, 0xE8); Error = Color.FromArgb(0xC0, 0x30, 0x30);
+                    break;
+                default:
+                    Body = Color.FromArgb(0xF2, 0xF2, 0xF2); Header = Color.FromArgb(0xE6, 0xE6, 0xE6); Border = Color.FromArgb(0xA0, 0xA0, 0xA0);
+                    Input = Color.White; Text = Color.FromArgb(0x1E, 0x1E, 0x1E); Muted = Color.FromArgb(0x6A, 0x6A, 0x6A);
+                    Button = Color.FromArgb(0xE1, 0xE1, 0xE1); ButtonHover = Color.FromArgb(0xD0, 0xD0, 0xD0); Error = Color.FromArgb(0xC0, 0x30, 0x30);
+                    break;
             }
         }
 
         // Follows Paint.NET's own theme setting, falling back to the Windows app theme when it is set to follow the system.
-        public static bool DetectDark()
+        public static Scheme Detect()
         {
             try
             {
                 using (var k = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\paint.net"))
                 {
                     string v = k?.GetValue("UI/AeroColorScheme") as string;
-                    if (string.Equals(v, "Dark", StringComparison.OrdinalIgnoreCase)) return true;
-                    if (string.Equals(v, "Light", StringComparison.OrdinalIgnoreCase)) return false;
+                    if (string.Equals(v, "Dark", StringComparison.OrdinalIgnoreCase)) return Scheme.Dark;
+                    if (string.Equals(v, "Light", StringComparison.OrdinalIgnoreCase)) return Scheme.Light;
+                    if (string.Equals(v, "Blue", StringComparison.OrdinalIgnoreCase)) return Scheme.Blue;
                 }
                 using (var k = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize"))
-                    return !(k?.GetValue("AppsUseLightTheme") is int i && i != 0);
+                    return k?.GetValue("AppsUseLightTheme") is int i && i != 0 ? Scheme.Light : Scheme.Dark;
             }
-            catch { return true; }
+            catch { return Scheme.Dark; }
         }
+    }    internal static class StockClose
+    {
+        private static Image Load(string n)
+        {
+            using (var s = typeof(StockClose).Assembly.GetManifestResourceStream(n)) return s == null ? new Bitmap(1, 1) : new Bitmap(s);
+        }
+        public static readonly Image Normal = Load("FlattenSave.close.png"), Hot = Load("FlattenSave.close_hot.png");
     }
+
     internal class DarkButton : Control
     {
         private bool hover, down;
         public Color BackNormal = Theme.Button, BackHover = Theme.ButtonHover;
         public bool DrawCross;
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden)]
+        public Image Icon { get; set; }
 
         public DarkButton()
         {
@@ -75,12 +95,13 @@ namespace FlattenSave
             if (down) using (var br = new SolidBrush(Color.FromArgb(40, 0, 0, 0))) g.FillRectangle(br, ClientRectangle);
             if (DrawCross)
             {
-                g.SmoothingMode = SmoothingMode.AntiAlias;
-                float cx = Width / 2f, cy = Height / 2f, d = 3.2f;
-                using var pen = new Pen(Color.White, 1.4f);
-                g.DrawLine(pen, cx - d, cy - d, cx + d, cy + d);
-                g.DrawLine(pen, cx - d, cy + d, cx + d, cy - d);
-            }
+                // Paint.NET's own close-button art, which already includes the red background.
+                var img = hover ? StockClose.Hot : StockClose.Normal;
+                g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                g.PixelOffsetMode = PixelOffsetMode.Half;
+                g.DrawImage(img, ClientRectangle);
+            }            else if (Icon != null)
+                g.DrawImage(Icon, (Width - Icon.Width) / 2, (Height - Icon.Height) / 2, Icon.Width, Icon.Height);
             else
                 TextRenderer.DrawText(g, Text, Font, ClientRectangle, ForeColor,
                     TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix);

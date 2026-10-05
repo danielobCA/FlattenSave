@@ -5,7 +5,7 @@
     <Nullable>disable</Nullable>
     <LangVersion>latest</LangVersion>
     <AssemblyName>FlattenSave</AssemblyName>
-    <Version>1.0.2</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <Version>1.0.3</Version><IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
     <RootNamespace>FlattenSave</RootNamespace>
     <NoWarn>MSB3277;CS8981;NU1701</NoWarn><AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
@@ -13,6 +13,10 @@
   </PropertyGroup>
   <ItemGroup>
     <EmbeddedResource Include="icon_new.png" LogicalName="FlattenSave.icon.png" />
+    <EmbeddedResource Include="settings_icon.png" LogicalName="FlattenSave.settings.png" />
+    <EmbeddedResource Include="open_icon.png" LogicalName="FlattenSave.open.png" />
+    <EmbeddedResource Include="close_normal.png" LogicalName="FlattenSave.close.png" />
+    <EmbeddedResource Include="close_hot.png" LogicalName="FlattenSave.close_hot.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PaintDotNet.Base"><HintPath>$(PdnDir)\PaintDotNet.Base.dll</HintPath><Private>false</Private></Reference>
